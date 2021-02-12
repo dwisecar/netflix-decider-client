@@ -2,9 +2,7 @@ import React from 'react';
 import {Button, Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 
-
-
-const NavBar = ({setGenre}) => {
+const NavBar = ({setGenre, movieGenres, showGenres}) => {
   return (
     <div className='navbar'>
       <Navbar bg="light" expand="lg">
@@ -19,24 +17,10 @@ const NavBar = ({setGenre}) => {
                 <Nav.Link>Favorites</Nav.Link>
             </LinkContainer>
             <NavDropdown title="Movies" id="basic-nav-dropdown">
-                <LinkContainer to='/movies/comedies'><NavDropdown.Item onClick={() => setGenre('comedies')}>Comedy</NavDropdown.Item></LinkContainer>
-                <NavDropdown.Item href="#action/3.2">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Sci-Fi / Fantasy</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">Horror</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.5">Documentary</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.6">Drama</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.7">Classic</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.8">Kids & Family</NavDropdown.Item>
+                {movieGenres.map(genre => <LinkContainer to={`/movies/${genre.toLowerCase()}`}><NavDropdown.Item onClick={() => setGenre(genre)}>{genre}</NavDropdown.Item></LinkContainer>)}
             </NavDropdown>
             <NavDropdown title="TV" id="basic-nav-dropdown">
-            <LinkContainer to='/tv_shows/comedies'><NavDropdown.Item onClick={() => setGenre('comedies')}>Comedy</NavDropdown.Item></LinkContainer>
-                <NavDropdown.Item href="#action/3.2">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Sci-Fi / Fantasy</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">Horror</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.5">Documentary</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.6">Drama</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.7">Classic</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.8">Kids & Family</NavDropdown.Item>
+              {showGenres.map(genre => <LinkContainer to={`/tv_shows/${genre.toLowerCase()}`}><NavDropdown.Item onClick={() => setGenre(genre)}>{genre}</NavDropdown.Item></LinkContainer>)}
             </NavDropdown>
             </Nav>
             <Form inline>
