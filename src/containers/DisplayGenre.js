@@ -6,7 +6,6 @@ import {Container} from 'react-bootstrap';
 class DisplayGenre extends React.Component {
     
     render(){
-        // const { genre } = this.props.match.params.genre;
         return(
             <div className='genre-grid'>
                 <Container>
