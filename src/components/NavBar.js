@@ -1,11 +1,13 @@
 import React from 'react';
 import {Button, Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
-const NavBar = ({setGenre, movieGenres, showGenres}) => {
+const NavBar = ({setGenre, movieGenres, showGenres, signIn, signUp}) => {
   return (
-    <div className='navbar'>
-      <Navbar bg="light" expand="lg">
+
+      <Navbar bg="light" expand="lg" fixed='top'>
         <Navbar.Brand href="#home">NETFLIX DECIDER</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -16,12 +18,20 @@ const NavBar = ({setGenre, movieGenres, showGenres}) => {
             <LinkContainer to='/favorites'>
                 <Nav.Link>Favorites</Nav.Link>
             </LinkContainer>
-            <NavDropdown title="Movies" id="basic-nav-dropdown">
+            <NavDropdown title="Movies">
                 {movieGenres.map(genre => <LinkContainer to={`/movies/${genre.toLowerCase()}`}><NavDropdown.Item onClick={() => setGenre(genre)}>{genre}</NavDropdown.Item></LinkContainer>)}
             </NavDropdown>
-            <NavDropdown title="TV" id="basic-nav-dropdown">
+            <NavDropdown title="TV">
               {showGenres.map(genre => <LinkContainer to={`/tv_shows/${genre.toLowerCase()}`}><NavDropdown.Item onClick={() => setGenre(genre)}>{genre}</NavDropdown.Item></LinkContainer>)}
             </NavDropdown>
+            
+            <NavDropdown title="Sign In" >
+              <SignIn signIn={signIn} />
+            </NavDropdown>
+            <NavDropdown title="Sign Up" >
+              <SignUp signUp={signUp}/>
+            </NavDropdown> 
+
             </Nav>
             <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -29,7 +39,7 @@ const NavBar = ({setGenre, movieGenres, showGenres}) => {
             </Form>
         </Navbar.Collapse>
         </Navbar>
-    </div>
+
   );
 }
 
