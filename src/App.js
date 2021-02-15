@@ -5,8 +5,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
 import Recommendations from "./containers/Recommendations";
 import DisplayGenre from "./containers/DisplayGenre";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
 class App extends React.Component {
   state = {
     movies: [],
@@ -20,8 +18,6 @@ class App extends React.Component {
     this.setState({ selectedGenre: genre });
   };
 
-  componentDidMount() {}
-  // User Sign in Method
   userSignIn = (e) => {
     e.preventDefault();
     let form = e.target;
@@ -142,7 +138,7 @@ class App extends React.Component {
 
   render() {
     console.log(this.state.user);
-    let { movies, shows, recommendations, selectedGenre } = this.state;
+    let { movies, shows, recommendations, selectedGenre, user } = this.state;
     return (
       <Router>
         <div className="main">
@@ -150,8 +146,11 @@ class App extends React.Component {
             setGenre={this.setGenre}
             movieGenres={this.movieGenres()}
             showGenres={this.showGenres()}
+            signIn={this.userSignIn}
+            signUp={this.userSignUp}
+            user={user}
           />
-          <Recommendations contents={recommendations} />
+          {user === false ? null : <Recommendations contents={recommendations} />}
           <Route
             exact
             path="/"
@@ -189,8 +188,6 @@ class App extends React.Component {
               />
             )}
           />
-          <SignIn signIn={this.userSignIn} />
-          <SignUp signUp={this.userSignUp} />
         </div>
       </Router>
     );

@@ -23,13 +23,13 @@ class NetflixCard extends React.Component{
         if(this.state.hoverOver){
             return (
             <div onMouseLeave={() => this.hovering(false)}>
-                <Card style={{ width: '18rem'  }} className='big-card'>
+                <Card style={{ width: '18rem' }} className="bg-dark text-white">
                     <Card.Img variant="top" src={details.image} />
-                    <Card.Body>
+                    <Card.ImgOverlay>
                         <Card.Title>{details.title}</Card.Title>
                         <Card.Text>{details.synopsis}</Card.Text>
                         {this.state.liked === true ? <Button onClick={() => this.handleLike(false)} variant="primary">Unlike</Button> : <Button onClick={() => this.handleLike(true)} variant="primary">Like</Button>}
-                    </Card.Body>
+                    </Card.ImgOverlay>
                 </Card>
             </div>)
         } else {
