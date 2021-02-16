@@ -10,9 +10,9 @@ class DisplayGenre extends React.Component {
         return(
             <div className='genre-grid'>
                 <Container>
-                    <Row className='display-row' xs={1} s={2} md={3} lg={6} xl={8}>             
+                    <Row className='genre-display-row' xs={1} s={2} md={3} lg={5} xl={5}>             
                         {this.props.contents.map(details => (
-                        <Col>
+                        <Col className='genre-col'>
                             <NetflixCard details={details} setFavorite={this.props.setFavorite}/>
                         </Col>))}
                     </Row>

@@ -16,7 +16,7 @@ class AllContent extends React.Component {
         let {movies, shows, movieGenres, showGenres} = this.props
         return(
             <div>
-                <Container >                  
+                <Container>                  
                     <div>
                         <h2>TV SERIES</h2>
                         {showGenres.map(genre => this.rowTemplate(shows, genre))}     
@@ -26,7 +26,6 @@ class AllContent extends React.Component {
                         {movieGenres.map(genre => this.rowTemplate(movies, genre))}
                     </div>
                 </Container>
-
             </div>
         )
     }
