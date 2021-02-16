@@ -11,7 +11,15 @@ import { LinkContainer } from "react-router-bootstrap";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
-const NavBar = ({ setGenre, movieGenres, showGenres, signIn, signUp }) => {
+const NavBar = ({
+  setGenre,
+  movieGenres,
+  showGenres,
+  signIn,
+  signUp,
+  user,
+  signOut,
+}) => {
   return (
     <Navbar bg="light" expand="lg" fixed="top">
       <Navbar.Brand href="#home">NOTFLIX</Navbar.Brand>
@@ -42,13 +50,20 @@ const NavBar = ({ setGenre, movieGenres, showGenres, signIn, signUp }) => {
               </LinkContainer>
             ))}
           </NavDropdown>
-
-          <NavDropdown title="Sign In">
-            <SignIn signIn={signIn} />
-          </NavDropdown>
-          <NavDropdown title="Sign Up">
-            <SignUp signUp={signUp} />
-          </NavDropdown>
+          {user ? (
+            <Nav.Link title="Sign Out" onClick={signOut}>
+              Sign Out
+            </Nav.Link>
+          ) : (
+            <>
+              <NavDropdown title="Sign In">
+                <SignIn signIn={signIn} />
+              </NavDropdown>
+              <NavDropdown title="Sign Up">
+                <SignUp signUp={signUp} />
+              </NavDropdown>
+            </>
+          )}
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />

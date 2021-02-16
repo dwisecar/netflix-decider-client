@@ -18,6 +18,56 @@ class App extends React.Component {
     this.setState({ selectedGenre: genre });
   };
 
+  setRecommendations = () => {
+    let genreObj = {};
+    this.state.user.medias &&
+      this.state.user.medias.forEach((media) => {
+        genreObj[media.genre]
+          ? genreObj[media.genre]++
+          : (genreObj[media.genre] = 1);
+      });
+    for (let obj in genreObj) {
+      genreObj[obj] =
+        Math.ceil(genreObj[obj] * 10) / this.state.user.medias.length;
+    }
+    let finalArr = [];
+    for (let obj in genreObj) {
+      let tempMovieArr = [];
+      let i = 0;
+      while (
+        tempMovieArr.length < genreObj[obj] &&
+        i < this.state.movies.length
+      ) {
+        if (
+          this.state.movies[i].genre === obj &&
+          !this.state.user.medias.includes(this.state.movies[i])
+        ) {
+          tempMovieArr.push(this.state.movies[i]);
+        }
+        i++;
+      }
+      let tempShowArr = [];
+      let j = 0;
+      while (
+        tempShowArr.length < genreObj[obj] &&
+        j < this.state.movies.length
+      ) {
+        if (
+          this.state.shows[j].genre === obj &&
+          !this.state.user.medias.includes(this.state.shows[i])
+        ) {
+          tempShowArr.push(this.state.shows[j]);
+        }
+        j++;
+      }
+      finalArr.push(...tempMovieArr, ...tempShowArr);
+      debugger;
+    }
+    // this.setState({
+    //   recommendations: [...finalArr],
+    // });
+  };
+
   userSignIn = (e) => {
     e.preventDefault();
     let form = e.target;
@@ -79,7 +129,7 @@ class App extends React.Component {
 
   handleLogout = () => {
     localStorage.clear();
-    this.setState({ user: {} });
+    this.setState({ user: false });
   };
 
   fetchContent = () => {
@@ -109,9 +159,12 @@ class App extends React.Component {
     })
       .then((resp) => resp.json())
       .then((user) =>
-        this.setState({
-          user: user,
-        })
+        this.setState(
+          {
+            user: user,
+          },
+          () => setTimeout(this.setRecommendations, 1000)
+        )
       );
   };
 
@@ -122,16 +175,12 @@ class App extends React.Component {
 
   //on like button click, this function receives the movie or show object and the bool value of liked or not
   setFavorite = (media, value) => {
-    value ? this.postFavorite(media) : this.deleteFavorite(media)
-  }
+    value ? this.postFavorite(media) : this.deleteFavorite(media);
+  };
 
-  postFavorite = media => {   
-    
-  }
+  postFavorite = (media) => {};
 
-  deleteFavorite = media => {
-    
-  }
+  deleteFavorite = (media) => {};
 
   //order in which each category renders on the main page
   movieGenres = () => {
@@ -176,9 +225,7 @@ class App extends React.Component {
   };
 
   render() {
-
     let { movies, shows, recommendations, selectedGenre, user } = this.state;
-
     return (
       <Router>
         <div className="main">
@@ -189,6 +236,7 @@ class App extends React.Component {
             signIn={this.userSignIn}
             signUp={this.userSignUp}
             user={user}
+            signOut={this.handleLogout}
           />
           {user === false ? null : (
             <Recommendations contents={recommendations} />
