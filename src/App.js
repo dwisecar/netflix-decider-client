@@ -150,7 +150,9 @@ class App extends React.Component {
             signUp={this.userSignUp}
             user={user}
           />
-          {user === false ? null : <Recommendations contents={recommendations} />}
+          {user === false ? null : (
+            <Recommendations contents={recommendations} />
+          )}
           <Route
             exact
             path="/"
