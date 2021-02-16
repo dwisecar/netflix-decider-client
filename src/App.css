@@ -28,9 +28,56 @@
   color: #61dafb;
 }
 
-.big-card {
-  align-items: center;
-  justify-content: center;
+.all-content-container {
+  display: flex;
+
+}
+
+.card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  z-index:1;
+}
+
+.card:hover{
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
+  background: rgb(0,0,0,.75);
+  border-radius: calc(.25rem - 1px);
+}
+
+.card-text {
+  font-size: 10pt;
+  color: white;
+}
+
+.genre-display-row{
+  padding-top: 150px;
+}
+
+.genre-col{
+  padding-bottom: 10px;
+}
+
+.genre-card{
+  transform: scale(1.5);
+  font-size: 10pt;
+  z-index: 2;
 }
 
 @keyframes App-logo-spin {
