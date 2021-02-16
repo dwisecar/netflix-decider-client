@@ -62,7 +62,6 @@ class App extends React.Component {
         j++;
       }
       finalArr.push(...tempMovieArr, ...tempShowArr);
-      debugger;
     }
     // this.setState({
     //   recommendations: [...finalArr],
@@ -88,9 +87,14 @@ class App extends React.Component {
           alert(user["error"]);
         } else {
           form.reset();
-          this.setState({
-            user: user.user,
-          });
+          this.setState(
+            {
+              user: user.user,
+            },
+            () => {
+              this.setRecommendations();
+            }
+          );
           localStorage.setItem("token", user.jwt);
           // this.fetchContent();
         }
@@ -117,9 +121,14 @@ class App extends React.Component {
           alert(user["error"]);
         } else {
           form.reset();
-          this.setState({
-            user: user.user,
-          });
+          this.setState(
+            {
+              user: user.user,
+            },
+            () => {
+              this.setRecommendations();
+            }
+          );
           localStorage.setItem("token", user.jwt);
           // this.fetchContent();
         }
