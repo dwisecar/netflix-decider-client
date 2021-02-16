@@ -91,8 +91,16 @@ class App extends React.Component {
 
   //on like button click, this function receives the movie or show object and the bool value of liked or not
   setFavorite = (media, value) => {
-    console.log(media, value);
-  };
+    value ? this.postFavorite(media) : this.deleteFavorite(media)
+  }
+
+  postFavorite = media => {   
+    
+  }
+
+  deleteFavorite = media => {
+    
+  }
 
   //order in which each category renders on the main page
   movieGenres = () => {

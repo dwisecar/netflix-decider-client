@@ -4,10 +4,8 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { CardDeck } from 'react-bootstrap';
 
-
-
 class DisplayRow extends React.Component {
-
+    
     render(){
         const responsive = {
             superLargeDesktop: {
@@ -30,9 +28,10 @@ class DisplayRow extends React.Component {
 
         return(
            
-            <Carousel responsive={responsive} slidesToSlide={6} swipeable={false} draggable={false}>
-                {this.props.contents.map(details => <NetflixCard details={details} setFavorite={this.props.setFavorite}/>)}       
-            </Carousel>
+                <Carousel responsive={responsive} slidesToSlide={6} swipeable={false} draggable={false}>
+                    {this.props.contents.map(details => <NetflixCard details={details} setFavorite={this.props.setFavorite}/>)}                                         
+                </Carousel>
+
         )
     }
 }
