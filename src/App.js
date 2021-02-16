@@ -21,7 +21,7 @@ class App extends React.Component {
   userSignIn = (e) => {
     e.preventDefault();
     let form = e.target;
-    fetch("http://localhost:3000/signin", {
+    fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,6 +40,8 @@ class App extends React.Component {
           this.setState({
             user: user,
           });
+          localStorage.setItem("token", user.jwt);
+          // this.fetchContent();
         }
       });
   };
@@ -48,7 +50,7 @@ class App extends React.Component {
   userSignUp = (e) => {
     e.preventDefault();
     let form = e.target;
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/api/v1/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,15 +62,24 @@ class App extends React.Component {
     })
       .then((resp) => resp.json())
       .then((user) => {
-        if (user["status"] === 400) {
+        if (user["status"] === 500) {
           alert(user["error"]);
         } else {
           form.reset();
           this.setState({
             user: user,
           });
+          localStorage.setItem("token", user.jwt);
+          // this.fetchContent();
         }
       });
+  };
+
+  //handle a user signing out
+
+  handleLogout = () => {
+    localStorage.clear();
+    this.setState({ user: {} });
   };
 
   fetchContent = () => {
@@ -82,7 +93,27 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetchContent();
+    const token = localStorage.token;
+    if (token) {
+      this.persistUser(token);
+    }
   }
+
+  //persisting a user when revisitng the web page
+  persistUser = (token) => {
+    fetch("http://localhost:3000/api/v1/persist", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((user) =>
+        this.setState({
+          user: user,
+        })
+      );
+  };
 
   //selectedGenre set by the navbar links
   setGenre = (genre) => {
@@ -145,8 +176,9 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.user);
+
     let { movies, shows, recommendations, selectedGenre, user } = this.state;
+
     return (
       <Router>
         <div className="main">
