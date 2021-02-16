@@ -2,9 +2,13 @@ import React from 'react';
 import NetflixCard from '../components/NetflixCard';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { CardDeck } from 'react-bootstrap';
+
 
 class DisplayRow extends React.Component {
+
+    isFavorite = media => {
+        return this.props.favorites && this.props.favorites.includes(media)
+    }
     
     render(){
         const responsive = {
@@ -29,7 +33,7 @@ class DisplayRow extends React.Component {
         return(
            
                 <Carousel responsive={responsive} slidesToSlide={6} swipeable={false} draggable={false}>
-                    {this.props.contents.map(details => <NetflixCard details={details} setFavorite={this.props.setFavorite}/>)}                                         
+                    {this.props.contents.map(details => <NetflixCard key={details.id} details={details} isFavorite={this.isFavorite(details)} setFavorite={this.props.setFavorite} user={this.props.user} favorites={this.props.favorites}/>)}                                         
                 </Carousel>
 
         )

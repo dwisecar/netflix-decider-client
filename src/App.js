@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
 import Recommendations from "./containers/Recommendations";
 import DisplayGenre from "./containers/DisplayGenre";
+import Favorites from "./containers/Favorites";
 class App extends React.Component {
   state = {
     movies: [],
@@ -88,7 +89,7 @@ class App extends React.Component {
         } else {
           form.reset();
           this.setState({
-            user: user,
+            user: user.user,
           });
           localStorage.setItem("token", user.jwt);
           // this.fetchContent();
@@ -117,7 +118,7 @@ class App extends React.Component {
         } else {
           form.reset();
           this.setState({
-            user: user,
+            user: user.user,
           });
           localStorage.setItem("token", user.jwt);
           // this.fetchContent();
@@ -178,7 +179,28 @@ class App extends React.Component {
     value ? this.postFavorite(media) : this.deleteFavorite(media);
   };
 
-  postFavorite = (media) => {};
+  postFavorite = (media) => {
+    fetch("http://localhost:3000/likes", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify({
+        user_id: this.state.user.id,
+        media_id: media.id,
+        media_type: media.vtype,
+      }),
+    }).then(() => {
+      this.setState({
+        user: {
+          id: this.state.user.id,
+          username: this.state.user.username,
+          medias: [...this.state.user.medias, media],
+        },
+      });
+    });
+  };
 
   deleteFavorite = (media) => {};
 
@@ -239,7 +261,11 @@ class App extends React.Component {
             signOut={this.handleLogout}
           />
           {user === false ? null : (
-            <Recommendations contents={recommendations} />
+            <Recommendations
+              contents={recommendations}
+              user={user}
+              setFavorite={this.setFavorite}
+            />
           )}
           <Route
             exact
@@ -251,6 +277,8 @@ class App extends React.Component {
                 movieGenres={this.movieGenres()}
                 showGenres={this.showGenres()}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
               />
             )}
           />
@@ -259,10 +287,12 @@ class App extends React.Component {
             render={() => (
               <DisplayGenre
                 genre={selectedGenre}
-                contents={this.state.movies.filter(
+                contents={movies.filter(
                   (movie) => movie.genre === selectedGenre
                 )}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
               />
             )}
           />
@@ -271,10 +301,23 @@ class App extends React.Component {
             render={() => (
               <DisplayGenre
                 genre={selectedGenre}
-                contents={this.state.shows.filter(
+                contents={shows.filter(
                   (movie) => movie.genre === selectedGenre
                 )}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
+              />
+            )}
+          />
+          <Route
+            path={"/favorites"}
+            render={() => (
+              <Favorites
+                contents={user.medias}
+                setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
               />
             )}
           />

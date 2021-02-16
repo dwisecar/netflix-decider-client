@@ -3,12 +3,12 @@ import {Container} from 'react-bootstrap';
 import DisplayRow from './DisplayRow';
 
 class AllContent extends React.Component {
-   
-    rowTemplate = (medias, genre) => {
+
+    rowTemplate = (medias, genre) => {    
         return(
         <div className='display-row'>
             <h3>{genre.toUpperCase()}</h3>
-            <DisplayRow contents={medias.filter(media => media.genre === genre)} setFavorite={this.props.setFavorite}/><br></br><br></br>
+            <DisplayRow contents={medias.filter(media => media.genre === genre)} setFavorite={this.props.setFavorite} favorites={this.props.favorites} user={this.props.user}/><br></br><br></br>
         </div>)
     }
     
