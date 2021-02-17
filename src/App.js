@@ -1,11 +1,13 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
 import DisplayGenre from "./containers/DisplayGenre";
 import Favorites from "./containers/Favorites";
+import Searched from "./containers/Search";
 
 class App extends React.Component {
   state = {
@@ -14,6 +16,24 @@ class App extends React.Component {
     recommendations: [],
     selectedGenre: "",
     user: false,
+    filteredNetflix: [],
+  };
+
+  handleSearch = (e) => {
+    e.preventDefault();
+
+    let searchTerm = e.target.search.value;
+    let totalSearched = [];
+    totalSearched.push(
+      ...this.state.shows.filter((show) => show.title.startsWith(searchTerm))
+    );
+    totalSearched.push(
+      ...this.state.movies.filter((movie) => movie.title.startsWith(searchTerm))
+    );
+    console.log(totalSearched);
+    this.setState({
+      filteredNetflix: totalSearched,
+    });
   };
 
   setGenre = (genre) => {
@@ -42,7 +62,9 @@ class App extends React.Component {
       ) {
         if (
           this.state.movies[i].genre === obj &&
-          !this.state.user.medias.includes(this.state.movies[i])
+          !this.state.user.medias
+            .map((show) => show.title)
+            .includes(this.state.movies[i].title)
         ) {
           tempMovieArr.push(this.state.movies[i]);
         }
@@ -52,18 +74,19 @@ class App extends React.Component {
       let j = 0;
       while (
         tempShowArr.length < genreObj[obj] &&
-        j < this.state.movies.length
+        j < this.state.shows.length
       ) {
         if (
-          this.state.shows[j] &&
           this.state.shows[j].genre === obj &&
-          !this.state.user.medias.includes(this.state.shows[i])
+          !this.state.user.medias
+            .map((show) => show.title)
+            .includes(this.state.shows[j].title)
         ) {
           tempShowArr.push(this.state.shows[j]);
         }
         j++;
       }
-      finalArr.push(...tempMovieArr, ...tempShowArr);
+      finalArr.push(...tempShowArr, ...tempMovieArr);
     }
     this.setState({
       recommendations: [...finalArr],
@@ -311,7 +334,6 @@ class App extends React.Component {
       "Documentary",
       "Romance",
       "Sci-Fi",
-      "Superhero",
       "Musical",
       "Family",
       "Fantasy",
@@ -335,6 +357,7 @@ class App extends React.Component {
             user={user}
             signOut={this.handleLogout}
             handleEdit={this.handleEdit}
+            handleSearch={this.handleSearch}
           />
           <Route
             exact
@@ -387,6 +410,16 @@ class App extends React.Component {
                 contents={user.medias}
                 setFavorite={this.setFavorite}
                 favorites={user.medias}
+                user={user}
+              />
+            )}
+          />
+          <Route
+            path={"/search"}
+            render={() => (
+              <Searched
+                contents={this.state.filteredNetflix}
+                setFavorite={this.setFavorite}
                 user={user}
               />
             )}
