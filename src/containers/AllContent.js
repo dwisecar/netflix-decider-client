@@ -60,5 +60,6 @@ class AllContent extends React.Component {
       </div>
     );
   }
+
 }
 export default AllContent;
