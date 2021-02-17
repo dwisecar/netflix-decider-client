@@ -13,16 +13,27 @@ class AllContent extends React.Component {
     }
     
     render(){
-        let {movies, shows, movieGenres, showGenres} = this.props
+        let {movies, shows, movieGenres, showGenres, favorites, user, recommendations} = this.props
         return(
             <div>
-                <Container>                  
+                <Container fluid="xl" style={{ marginTop:'5rem', maxWidth:'90%'}}> 
+                    {user === false || recommendations === [] ? null : 
+                        <>
+                            <h1>RECOMMENDATIONS</h1>
+                            <DisplayRow
+                            contents={recommendations}
+                            user={user}
+                            favorites={favorites}
+                            setFavorite={this.setFavorite}
+                            /><br></br><br></br><br></br><br></br>
+                        </>
+                    }                 
                     <div>
-                        <h2>TV SERIES</h2>
+                        <h1>TV SERIES</h1>
                         {showGenres.map(genre => this.rowTemplate(shows, genre))}     
                     </div>
                     <div>
-                        <h2>MOVIES</h2>
+                        <h1>MOVIES</h1>
                         {movieGenres.map(genre => this.rowTemplate(movies, genre))}
                     </div>
                 </Container>

@@ -1,11 +1,13 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
+import './custom.scss'
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
-import Recommendations from "./containers/Recommendations";
 import DisplayGenre from "./containers/DisplayGenre";
 import Favorites from "./containers/Favorites";
+
 class App extends React.Component {
   state = {
     movies: [],
@@ -64,9 +66,9 @@ class App extends React.Component {
       }
       finalArr.push(...tempMovieArr, ...tempShowArr);
     }
-    // this.setState({
-    //   recommendations: [...finalArr],
-    // });
+    this.setState({
+      recommendations: [...finalArr],
+    });
   };
 
   userSignIn = (e) => {
@@ -335,13 +337,6 @@ class App extends React.Component {
             signOut={this.handleLogout}
             handleEdit={this.handleEdit}
           />
-          {user === false ? null : (
-            <Recommendations
-              contents={recommendations}
-              user={user}
-              setFavorite={this.setFavorite}
-            />
-          )}
           <Route
             exact
             path="/"
@@ -353,6 +348,7 @@ class App extends React.Component {
                 showGenres={this.showGenres()}
                 setFavorite={this.setFavorite}
                 favorites={user.medias}
+                recommendations={recommendations}
                 user={user}
               />
             )}
