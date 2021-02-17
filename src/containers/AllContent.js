@@ -13,7 +13,7 @@ class AllContent extends React.Component {
     }
     
     render(){
-        let {movies, shows, movieGenres, showGenres, favorites, user, recommendations} = this.props
+        let {movies, shows, movieGenres, showGenres, favorites, user, recommendations, setFavorite} = this.props
         return(
             <div>
                 <Container fluid="xl" style={{ marginTop:'5rem', maxWidth:'90%'}}> 
@@ -24,7 +24,7 @@ class AllContent extends React.Component {
                             contents={recommendations}
                             user={user}
                             favorites={favorites}
-                            setFavorite={this.setFavorite}
+                            setFavorite={setFavorite}
                             /><br></br><br></br><br></br><br></br>
                         </>
                     }                 
