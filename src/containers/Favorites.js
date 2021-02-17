@@ -4,7 +4,12 @@ import NetflixCard from "../components/NetflixCard";
 
 class Favorites extends React.Component {
   isFavorite = (media) => {
-    return this.props.favorites && this.props.favorites.includes(media);
+    return (
+      this.props.favorites &&
+      this.props.favorites
+        .map((favorite) => favorite.title)
+        .includes(media.title)
+    );
   };
 
   render() {

@@ -1,7 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
@@ -117,11 +116,11 @@ class App extends React.Component {
               user: user.user,
             },
             () => {
+              this.fetchContent();
               this.setRecommendations();
             }
           );
           localStorage.setItem("token", user.jwt);
-          // this.fetchContent();
         }
       });
   };
@@ -151,11 +150,11 @@ class App extends React.Component {
               user: user.user,
             },
             () => {
+              this.fetchContent();
               this.setRecommendations();
             }
           );
           localStorage.setItem("token", user.jwt);
-          // this.fetchContent();
         }
       });
   };
@@ -177,10 +176,11 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchContent();
     const token = localStorage.token;
     if (token) {
       this.persistUser(token);
+    } else {
+      this.fetchContent();
     }
   }
 
@@ -198,7 +198,10 @@ class App extends React.Component {
           {
             user: user,
           },
-          () => setTimeout(this.setRecommendations, 1000)
+          () => {
+            this.fetchContent();
+            setTimeout(this.setRecommendations, 1000);
+          }
         )
       );
   };
