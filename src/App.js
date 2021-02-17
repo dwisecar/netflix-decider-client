@@ -1,7 +1,7 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import './custom.scss'
+// import './custom.scss'
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
@@ -43,7 +43,9 @@ class App extends React.Component {
       ) {
         if (
           this.state.movies[i].genre === obj &&
-          !this.state.user.medias.includes(this.state.movies[i])
+          !this.state.user.medias
+            .map((show) => show.title)
+            .includes(this.state.movies[i].title)
         ) {
           tempMovieArr.push(this.state.movies[i]);
         }
@@ -53,18 +55,19 @@ class App extends React.Component {
       let j = 0;
       while (
         tempShowArr.length < genreObj[obj] &&
-        j < this.state.movies.length
+        j < this.state.shows.length
       ) {
         if (
-          this.state.shows[j] &&
           this.state.shows[j].genre === obj &&
-          !this.state.user.medias.includes(this.state.shows[i])
+          !this.state.user.medias
+            .map((show) => show.title)
+            .includes(this.state.shows[j].title)
         ) {
           tempShowArr.push(this.state.shows[j]);
         }
         j++;
       }
-      finalArr.push(...tempMovieArr, ...tempShowArr);
+      finalArr.push(...tempShowArr, ...tempMovieArr);
     }
     this.setState({
       recommendations: [...finalArr],
@@ -323,6 +326,7 @@ class App extends React.Component {
   };
 
   render() {
+    console.log(this.state.user.medias);
     let { movies, shows, recommendations, selectedGenre, user } = this.state;
     return (
       <Router>
