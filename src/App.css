@@ -39,15 +39,36 @@
   min-width: 0;
   word-wrap: break-word;
   background-clip: border-box;
-  border: 1px solid rgba(0,0,0,.125);
+  border: 1px solid rgba(0,0,0,0);
   border-radius: .25rem;
   z-index:1;
+  padding:10%;
+}
+/* 
+.card-img-overlay:hover ~ .card-image {
+  animation-name: imageZoom;
+  animation-duration: .5s;
+} */
+
+.netflix-card > .card-image {
+  transform: scale(1);
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
 }
 
-.card:hover{
-  transform: scale(1.1);
-  z-index: 2;
+.netflix-card:hover > .card-image {
+  transform: scale(1.17);
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
 }
+
+
 
 .card-img-overlay {
   position: absolute;
@@ -55,19 +76,54 @@
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 1.25rem;
+  background: rgb(0,0,0,0);
+  border-radius: calc(.25rem - 1px);
+}
+
+.netflix-card:hover > .card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgb(0,0,0,.75);
   border-radius: calc(.25rem - 1px);
 }
 
-.card-text {
-  font-size: 16pt;
-  color: white;
+.card-img-overlay:hover * {
+  opacity: 1;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
 }
 
-.card-img{
-  width: 90%;
-  flex-shrink: 0;
+.card-title{
+  opacity: 0;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
+}
+
+.card-text {
+  padding:5%;
+  font-size: 12pt;
+  line-height: 20px;
+  color: white;
+  opacity: 0;
+}
+
+.card-button{
+  margin-left: 37%;
+  opacity: 0;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
 }
 
 .genre-display-row{
@@ -84,6 +140,35 @@
   z-index: 2;
 }
 
+.carousel-arrow {
+  outline-color: initial;
+  border-color: black;
+  background-image: initial;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.carousel-arrow--right {
+  right: calc(-0.2% + 1px);
+}
+
+.carousel-arrow--left {
+  left: calc(-.2% + 1px);
+}
+
+.carousel-arrow {
+  position: absolute;
+  outline: 0;
+  transition: all .5s;
+  border-radius: 10px;
+  z-index: 1000;
+  border: 5px;
+  background: rgba(0,0,0,0.5);
+  min-width: 30px;
+  min-height: 250px;
+  opacity: 1;
+  cursor: pointer;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -92,4 +177,14 @@
     transform: rotate(360deg);
   }
 
+}
+
+@keyframes imageZoom {
+  from {transform: scale(1)}
+  to {transform: scale(1.17)}
+}
+
+@keyframes imageZoomOut {
+  from {transform: scale(1.17)}
+  to {transform: scale(1)}
 }

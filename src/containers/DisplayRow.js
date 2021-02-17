@@ -30,10 +30,29 @@ class DisplayRow extends React.Component {
               items: 3
         }}
 
+        const CustomRightArrow = ({ onClick, ...rest }) => {
+            const {
+              onMove,
+              carouselState: { currentSlide, deviceType }
+            } = rest;
+            // onMove means if dragging or swiping in progress.
+            return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--right">❯</button>;
+          };
+
+          const CustomLeftArrow = ({ onClick, ...rest }) => {
+            const {
+              onMove,
+              carouselState: { currentSlide, deviceType }
+            } = rest;
+            // onMove means if dragging or swiping in progress.
+            return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--left">❮</button>;
+          };
+
+
         return(
            
-                <Carousel responsive={responsive} slidesToSlide={6} swipeable={false} draggable={false}>
-                    {this.props.contents.map(details => <NetflixCard key={details.id} details={details} isFavorite={this.isFavorite(details)} setFavorite={this.props.setFavorite} user={this.props.user} favorites={this.props.favorites}/>)}                                         
+                <Carousel responsive={responsive} slidesToSlide={6} swipeable={false} draggable={false} infinite={true} customLeftArrow={<CustomLeftArrow/>} customRightArrow={<CustomRightArrow/>}  >
+                    {this.props.contents.map(details => <NetflixCard className='show-card' key={details.id} details={details} isFavorite={this.isFavorite(details)} setFavorite={this.props.setFavorite} user={this.props.user} favorites={this.props.favorites}/>)}                                         
                 </Carousel>
 
         )
