@@ -29,9 +29,9 @@ const NavBar = ({
           <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/favorites">
-            <Nav.Link>Favorites</Nav.Link>
-          </LinkContainer>
+          {user ? (<LinkContainer to="/favorites">
+            <Nav.Link>{user.username}'s Favorites</Nav.Link>
+          </LinkContainer>) : null}
           <NavDropdown title="Movies">
             {movieGenres.map((genre) => (
               <LinkContainer to={`/movies/${genre.toLowerCase()}`}>

@@ -22,7 +22,7 @@ class NetflixCard extends React.Component {
             if(user !== false){
             return (
                 <Card bg="dark" onMouseLeave={() => this.setHovering(false)}>
-                    <Card.Img src={details.image} alt="card-image"/>
+                    <Card.Img src={details.image} alt="card-image" className="card-image-hover"/>
                     <Card.ImgOverlay>
                         <Card.Text className='card-text'>{details.synopsis}</Card.Text>
                         {this.props.isFavorite === true ? <Button onClick={() => this.setLiked(false)} variant="primary">Unlike</Button> : <Button onClick={() => this.setLiked(true)} variant="primary">Like</Button>}
@@ -31,7 +31,7 @@ class NetflixCard extends React.Component {
             } else {
                 return(
                 <Card bg="dark" onMouseLeave={() => this.setHovering(false)}>
-                    <Card.Img src={details.image} alt="card-image"/>
+                    <Card.Img src={details.image} alt="card-image" className="card-image-hover"/>
                     <Card.ImgOverlay>
                         <Card.Text className='card-text'>{details.synopsis}</Card.Text>
                     </Card.ImgOverlay>
@@ -40,7 +40,7 @@ class NetflixCard extends React.Component {
         } else {
             return(          
                 <Card onMouseEnter={() => this.setHovering(true)}>
-                    <img src={details.image} />
+                    <Card.Img src={details.image} alt="card-image" className="card-image-show"/>
                 </Card>             
             )
         }
