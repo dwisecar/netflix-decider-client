@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
 import DisplayGenre from "./containers/DisplayGenre";
 import Favorites from "./containers/Favorites";
+import Searched from "./containers/Search";
 
 class App extends React.Component {
   state = {
@@ -15,6 +16,24 @@ class App extends React.Component {
     recommendations: [],
     selectedGenre: "",
     user: false,
+    filteredNetflix: [],
+  };
+
+  handleSearch = (e) => {
+    e.preventDefault();
+
+    let searchTerm = e.target.search.value;
+    let totalSearched = [];
+    totalSearched.push(
+      ...this.state.shows.filter((show) => show.title.startsWith(searchTerm))
+    );
+    totalSearched.push(
+      ...this.state.movies.filter((movie) => movie.title.startsWith(searchTerm))
+    );
+    console.log(totalSearched);
+    this.setState({
+      filteredNetflix: totalSearched,
+    });
   };
 
   setGenre = (genre) => {
@@ -315,7 +334,6 @@ class App extends React.Component {
       "Documentary",
       "Romance",
       "Sci-Fi",
-      "Superhero",
       "Musical",
       "Family",
       "Fantasy",
@@ -326,7 +344,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.user.medias);
     let { movies, shows, recommendations, selectedGenre, user } = this.state;
     return (
       <Router>
@@ -340,6 +357,7 @@ class App extends React.Component {
             user={user}
             signOut={this.handleLogout}
             handleEdit={this.handleEdit}
+            handleSearch={this.handleSearch}
           />
           <Route
             exact
@@ -392,6 +410,16 @@ class App extends React.Component {
                 contents={user.medias}
                 setFavorite={this.setFavorite}
                 favorites={user.medias}
+                user={user}
+              />
+            )}
+          />
+          <Route
+            path={"/search"}
+            render={() => (
+              <Searched
+                contents={this.state.filteredNetflix}
+                setFavorite={this.setFavorite}
                 user={user}
               />
             )}
