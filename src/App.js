@@ -54,6 +54,7 @@ class App extends React.Component {
         j < this.state.movies.length
       ) {
         if (
+          this.state.shows[j] &&
           this.state.shows[j].genre === obj &&
           !this.state.user.medias.includes(this.state.shows[i])
         ) {
@@ -62,7 +63,6 @@ class App extends React.Component {
         j++;
       }
       finalArr.push(...tempMovieArr, ...tempShowArr);
-      debugger;
     }
     // this.setState({
     //   recommendations: [...finalArr],
@@ -88,9 +88,14 @@ class App extends React.Component {
           alert(user["error"]);
         } else {
           form.reset();
-          this.setState({
-            user: user.user,
-          });
+          this.setState(
+            {
+              user: user.user,
+            },
+            () => {
+              this.setRecommendations();
+            }
+          );
           localStorage.setItem("token", user.jwt);
           // this.fetchContent();
         }
@@ -117,9 +122,14 @@ class App extends React.Component {
           alert(user["error"]);
         } else {
           form.reset();
-          this.setState({
-            user: user.user,
-          });
+          this.setState(
+            {
+              user: user.user,
+            },
+            () => {
+              this.setRecommendations();
+            }
+          );
           localStorage.setItem("token", user.jwt);
           // this.fetchContent();
         }
@@ -192,18 +202,82 @@ class App extends React.Component {
         media_type: media.vtype,
       }),
     }).then(() => {
+      this.setState(
+        {
+          user: {
+            id: this.state.user.id,
+            username: this.state.user.username,
+            medias: [...this.state.user.medias, media],
+          },
+        },
+        () => {
+          this.setRecommendations();
+        }
+      );
+    });
+  };
+
+  deleteFavorite = (media) => {
+    let token = localStorage.token;
+    let updated = this.state.user.medias.filter((net) => {
+      return net !== media;
+    });
+    fetch("http://localhost:3000/delete_like", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accepts: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        user_id: this.state.user.id,
+        media_id: media.id,
+        media_type: media.vtype,
+      }),
+    }).then(() => {
       this.setState({
         user: {
+          medias: updated,
           id: this.state.user.id,
-          username: this.state.user.username,
-          medias: [...this.state.user.medias, media],
+          username: this.state.user.id,
         },
       });
     });
   };
 
-  deleteFavorite = (media) => {};
-
+  //handle editing username
+  handleEdit = (e) => {
+    e.preventDefault();
+    let form = e.target;
+    let token = localStorage.token;
+    let newUsername = e.target.username.value;
+    console.log(e.target.username.value);
+    fetch(`http://localhost:3000/api/v1/editname`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+        Accepts: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        username: newUsername,
+        user_id: this.state.user.id,
+      }),
+    }).then(
+      this.setState(
+        {
+          user: {
+            medias: this.state.user.medias,
+            id: this.state.user.id,
+            username: newUsername,
+          },
+        },
+        () => {
+          form.reset();
+        }
+      )
+    );
+  };
   //order in which each category renders on the main page
   movieGenres = () => {
     return [
@@ -259,6 +333,7 @@ class App extends React.Component {
             signUp={this.userSignUp}
             user={user}
             signOut={this.handleLogout}
+            handleEdit={this.handleEdit}
           />
           {user === false ? null : (
             <Recommendations

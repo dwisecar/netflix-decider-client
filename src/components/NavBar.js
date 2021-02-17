@@ -10,6 +10,7 @@ import {
 import { LinkContainer } from "react-router-bootstrap";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import EditUser from "./EditUser";
 
 const NavBar = ({
   setGenre,
@@ -19,6 +20,7 @@ const NavBar = ({
   signUp,
   user,
   signOut,
+  handleEdit,
 }) => {
   return (
     <Navbar bg="light" expand="lg" fixed="top">
@@ -51,9 +53,14 @@ const NavBar = ({
             ))}
           </NavDropdown>
           {user ? (
-            <Nav.Link title="Sign Out" onClick={signOut}>
-              Sign Out
-            </Nav.Link>
+            <>
+              <Nav.Link title="Sign Out" onClick={signOut}>
+                Sign Out
+              </Nav.Link>
+              <NavDropdown title="Edit User">
+                <EditUser handleEdit={handleEdit} user={user} />
+              </NavDropdown>
+            </>
           ) : (
             <>
               <NavDropdown title="Sign In">
