@@ -116,11 +116,11 @@ class App extends React.Component {
               user: user.user,
             },
             () => {
+              this.fetchContent();
               this.setRecommendations();
             }
           );
           localStorage.setItem("token", user.jwt);
-          // this.fetchContent();
         }
       });
   };
@@ -150,11 +150,11 @@ class App extends React.Component {
               user: user.user,
             },
             () => {
+              this.fetchContent();
               this.setRecommendations();
             }
           );
           localStorage.setItem("token", user.jwt);
-          // this.fetchContent();
         }
       });
   };
@@ -176,10 +176,11 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchContent();
     const token = localStorage.token;
     if (token) {
       this.persistUser(token);
+    } else {
+      this.fetchContent();
     }
   }
 
@@ -197,7 +198,10 @@ class App extends React.Component {
           {
             user: user,
           },
-          () => setTimeout(this.setRecommendations, 1000)
+          () => {
+            this.fetchContent();
+            setTimeout(this.setRecommendations, 1000);
+          }
         )
       );
   };
