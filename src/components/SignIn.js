@@ -17,9 +17,6 @@ const signIn = ({ signIn }) => {
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password" name="password" />
       </Form.Group>
-      <Form.Group controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
       <Button variant="primary" type="submit">
         Submit
       </Button>
