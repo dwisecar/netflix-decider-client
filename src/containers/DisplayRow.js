@@ -28,24 +28,31 @@ const DisplayRow = ({favorites, contents, user, setFavorite}) => {
             items: 3
     }}
 
+
+    const CustomLeftArrow = ({ onClick, ...rest }) => {
+    const {
+        onMove,
+        carouselState: { currentSlide, deviceType }
+    } = rest;
+    // onMove means if dragging or swiping in progress.
+    return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--left">❮</button>;
+    };
+
     const CustomRightArrow = ({ onClick, ...rest }) => {
-        const {
-            onMove,
-            carouselState: { currentSlide, deviceType }
-        } = rest;
-        // onMove means if dragging or swiping in progress.
-        return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--right">❯</button>;
-        };
-
-        const CustomLeftArrow = ({ onClick, ...rest }) => {
-        const {
-            onMove,
-            carouselState: { currentSlide, deviceType }
-        } = rest;
-        // onMove means if dragging or swiping in progress.
-        return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--left">❮</button>;
-        };
-
+      const {
+        onMove,
+        carouselState: { currentSlide, deviceType },
+      } = rest;
+      // onMove means if dragging or swiping in progress.
+      return (
+        <button
+          onClick={() => onClick()}
+          className="carousel-arrow carousel-arrow--right"
+        >
+          ❯
+        </button>
+      );
+    };
 
     return(
         <Carousel responsive={responsive} 
@@ -68,4 +75,4 @@ const DisplayRow = ({favorites, contents, user, setFavorite}) => {
         </Carousel>
     )  
 }
-export default DisplayRow
+export default DisplayRow;
