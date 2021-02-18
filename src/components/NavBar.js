@@ -26,7 +26,7 @@ const NavBar = ({
 }) => {
   let history = useHistory();
   return (
-    <Navbar bg="light" expand="lg" fixed="top">
+    <Navbar className="navbar" expand="lg" fixed="top">
       <Navbar.Brand href="#home">NOTFLIX</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -87,7 +87,7 @@ const NavBar = ({
             className="mr-sm-2"
             name="search"
           />
-          <Button type="submit" variant="outline-success">
+          <Button type="submit" variant="dark">
             Search
           </Button>
         </Form>

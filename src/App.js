@@ -160,7 +160,6 @@ class App extends React.Component {
   };
 
   //handle a user signing out
-
   handleLogout = () => {
     localStorage.clear();
     this.setState({ user: false });
