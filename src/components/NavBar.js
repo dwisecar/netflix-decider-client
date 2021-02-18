@@ -26,8 +26,10 @@ const NavBar = ({
 }) => {
   let history = useHistory();
   return (
-    <Navbar className="navbar" expand="lg" fixed="top">
-      <Navbar.Brand href="#home">NOTFLIX</Navbar.Brand>
+    <Navbar className="navbar" expand="lg" fixed="top" >
+      <LinkContainer to="/"> 
+        <Navbar.Brand>NOTFLIX</Navbar.Brand>
+      </LinkContainer> 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -59,9 +61,11 @@ const NavBar = ({
           </NavDropdown>
           {user ? (
             <>
-              <Nav.Link title="Sign Out" onClick={signOut}>
-                Sign Out
-              </Nav.Link>
+              <LinkContainer to="/">
+                <Nav.Link title="Sign Out" onClick={signOut}>
+                  Sign Out
+                </Nav.Link>
+              </LinkContainer>
               <NavDropdown title="Edit User">
                 <EditUser handleEdit={handleEdit} user={user} />
               </NavDropdown>
@@ -84,7 +88,7 @@ const NavBar = ({
           <FormControl
             type="text"
             placeholder="Search"
-            className="mr-sm-2"
+            className="nav-search mr-sm-2"
             name="search"
           />
           <Button type="submit" variant="dark">

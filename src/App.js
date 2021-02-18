@@ -4,9 +4,7 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
-import DisplayGenre from "./containers/DisplayGenre";
-import Favorites from "./containers/Favorites";
-import Searched from "./containers/Search";
+import CategoryDisplay from "./containers/CategoryDisplay";
 
 class App extends React.Component {
   state = {
@@ -317,7 +315,6 @@ class App extends React.Component {
       "Crime",
       "Mystery",
       "Romance",
-      "Superhero",
       "Musical",
       "Family",
       "Biography",
@@ -336,7 +333,6 @@ class App extends React.Component {
       "Documentary",
       "Romance",
       "Sci-Fi",
-      "Musical",
       "Family",
       "Fantasy",
       "Biography",
@@ -380,7 +376,7 @@ class App extends React.Component {
           <Route
             path={`/movies/${selectedGenre}`}
             render={() => (
-              <DisplayGenre
+              <CategoryDisplay
                 genre={selectedGenre}
                 contents={movies.filter(
                   (movie) => movie.genre === selectedGenre
@@ -394,7 +390,7 @@ class App extends React.Component {
           <Route
             path={`/tv_shows/${selectedGenre}`}
             render={() => (
-              <DisplayGenre
+              <CategoryDisplay
                 genre={selectedGenre}
                 contents={shows.filter(
                   (movie) => movie.genre === selectedGenre
@@ -408,7 +404,7 @@ class App extends React.Component {
           <Route
             path={"/favorites"}
             render={() => (
-              <Favorites
+              <CategoryDisplay
                 contents={user.medias}
                 setFavorite={this.setFavorite}
                 favorites={user.medias}
@@ -419,7 +415,7 @@ class App extends React.Component {
           <Route
             path={"/search"}
             render={() => (
-              <Searched
+              <CategoryDisplay
                 contents={this.state.filteredNetflix}
                 setFavorite={this.setFavorite}
                 user={user}

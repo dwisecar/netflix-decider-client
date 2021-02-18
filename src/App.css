@@ -39,13 +39,20 @@ body{
 }
 
 .navbar {
-  background: red;
-  color: black;
+  background: linear-gradient(red, rgb(126, 1, 1));
   font-size: 16pt;
 }
 
 .navbar-brand{
   font-size: 20pt;
+}
+
+.nav-search {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.big-title {
+  margin-bottom: 0;
 }
 
 .row-title {
@@ -165,7 +172,7 @@ body{
 }
 
 .carousel-arrow--right {
-  right: calc(-0.2% + 1px);
+  right: calc(-0.25% + 1px);
 }
 
 .carousel-arrow--left {
@@ -176,9 +183,9 @@ body{
   position: absolute;
   outline: 0;
   transition: all .5s;
-  border-radius: 10px;
-  z-index: 1000;
+  border-radius: 5px;
   border: 5px;
+  z-index: 1000;
   background: rgba(160, 160, 160, 0.5);
   min-width: 30px;
   min-height: 250px;
@@ -186,7 +193,9 @@ body{
   cursor: pointer;
 }
 
-
+.carousel-arrow:hover {
+  background: rgba(204, 204, 204, 0.733);
+}
 
 @keyframes App-logo-spin {
   from {

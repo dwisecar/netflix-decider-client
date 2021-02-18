@@ -51,7 +51,7 @@ class AllContent extends React.Component {
         <Container fluid="xl" style={{ marginTop: "5rem", maxWidth: "90%" }}>
           {user === false || recommendations === [] ? null : (
             <>
-              <h1>RECOMMENDATIONS</h1>
+              <h1 className='big-title'>RECOMMENDATIONS</h1>
               <DisplayRow
                 contents={recommendations}
                 user={user}
@@ -65,11 +65,11 @@ class AllContent extends React.Component {
             </>
           )}
           <div>
-            <h1>TV SERIES</h1>
+            <h1 className='big-title'>TV SERIES</h1>
             {showGenres.map((genre) => this.rowTemplate(shows, genre))}
           </div>
           <div>
-            <h1>MOVIES</h1>
+            <h1 className='big-title'>MOVIES</h1>
             {movieGenres.map((genre) => this.rowTemplate(movies, genre))}
           </div>
         </Container>

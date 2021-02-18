@@ -2,11 +2,12 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 const signIn = ({ signIn }) => {
   return (
-    <Form onSubmit={signIn}>
+    <Form onSubmit={signIn} style={{ padding:'5px'}}>
       <h2>Sign In</h2>
       <Form.Group controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
         <Form.Control
+          className="nav-search"
           name="username"
           type="username"
           placeholder="Enter username"
@@ -15,12 +16,12 @@ const signIn = ({ signIn }) => {
 
       <Form.Group controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" name="password" />
+        <Form.Control type="password" placeholder="Password" name="password" className="nav-search"/>
       </Form.Group>
       <Form.Group controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="danger" type="submit">
         Submit
       </Button>
     </Form>
