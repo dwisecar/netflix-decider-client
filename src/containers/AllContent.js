@@ -6,7 +6,7 @@ class AllContent extends React.Component {
   rowTemplate = (medias, genre) => {
     return (
       <div className="display-row">
-        <h3>{genre.toUpperCase()}</h3>
+        <h3 className='row-title'>{genre.toUpperCase()}</h3>
         <DisplayRow
           contents={medias.filter((media) => media.genre === genre)}
           setFavorite={this.props.setFavorite}

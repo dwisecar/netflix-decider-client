@@ -20,20 +20,20 @@ class NetflixCard extends React.Component {
         const {details, user } = this.props
         if(user !== false){
             return (
-                <Card bg="dark" className='netflix-card' onMouseLeave={() => this.setHovering(false)}>
+                <Card className='netflix-card' onMouseLeave={() => this.setHovering(false)}>
                     <Card.Img src={details.image} alt="card-image" className="card-image"/>
                     <Card.ImgOverlay >
                         <Card.Title className='card-title'>{details.title}</Card.Title>
                         <Card.Text className='card-text'>{details.synopsis}</Card.Text>
-                        {this.props.isFavorite === true ? <Button className='card-button' onClick={() => this.setLiked(false)} variant="primary">Unlike</Button> : <Button className='card-button' onClick={() => this.setLiked(true)} variant="primary">Like</Button>}
+                        {this.props.isFavorite === true ? <Button className='card-button' onClick={() => this.setLiked(false)} variant="danger">Unlike</Button> : <Button className='card-button' onClick={() => this.setLiked(true)} variant="danger">Like</Button>}
                     </Card.ImgOverlay>
                 </Card>)
-            } else {
-                return(
-                <Card bg="dark" onMouseLeave={() => this.setHovering(false)}>
+        } else {
+            return (
+                <Card className='netflix-card' onMouseLeave={() => this.setHovering(false)}>
                     <Card.Img src={details.image} alt="card-image" className="card-image"/>
-                    <Card.ImgOverlay>
-                        <Card.Title>{details.title}</Card.Title>
+                    <Card.ImgOverlay >
+                        <Card.Title className='card-title'>{details.title}</Card.Title>
                         <Card.Text className='card-text'>{details.synopsis}</Card.Text>
                     </Card.ImgOverlay>
                 </Card>)
