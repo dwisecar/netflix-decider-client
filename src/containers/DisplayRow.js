@@ -35,7 +35,7 @@ const DisplayRow = ({favorites, contents, user, setFavorite}) => {
         carouselState: { currentSlide, deviceType }
     } = rest;
     // onMove means if dragging or swiping in progress.
-    return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--left">❮</button>;
+    return <button onClick={() => onClick()} className="carousel-arrow carousel-arrow--left" >❮</button>;
     };
 
     const CustomRightArrow = ({ onClick, ...rest }) => {

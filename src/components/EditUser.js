@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 const editUser = ({ handleEdit, user }) => {
   return (
-    <Form onSubmit={handleEdit} style={{ padding:'5px'}}>
+    <Form onSubmit={handleEdit} style={{ padding:'10px'}}>
       <h2>Edit Username</h2>
       <Form.Group controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
