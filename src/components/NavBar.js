@@ -84,7 +84,7 @@ const NavBar = ({
         </Nav>
         <GoSearch style={{ marginRight: "10px" }} />
         <Form
-          inline
+          inline 
           onSubmit={(e) => (handleSearch(e), history.push("/search"))}
         >
           <FormControl
