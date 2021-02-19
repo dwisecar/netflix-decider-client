@@ -373,22 +373,7 @@ class App extends React.Component {
               />
             )}
           />
-          <Route
-            exact
-            path="/home"
-            render={() => (
-              <AllContent
-                shows={shows}
-                movies={movies}
-                movieGenres={this.movieGenres()}
-                showGenres={this.showGenres()}
-                setFavorite={this.setFavorite}
-                favorites={user.medias}
-                recommendations={recommendations}
-                user={user}
-              />
-            )}
-          />
+          <Route exact path="/signout" />
           <Route
             path={`/movies/${selectedGenre}`}
             render={() => (

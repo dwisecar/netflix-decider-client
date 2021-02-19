@@ -62,10 +62,12 @@ const NavBar = ({
           </NavDropdown>
           {user ? (
             <>
-              <LinkContainer exact to="/home">
+              <LinkContainer exact to="/signout">
                 <Nav.Link
                   title="Sign Out"
-                  onClick={signOut}
+                  onClick={(e) => (
+                    signOut(e), setTimeout(() => history.push("/"), 30)
+                  )}
                   style={{ color: "rgba(0,0,0,.5)" }}
                 >
                   Sign Out
