@@ -1,36 +1,108 @@
-import React from 'react';
-import {Button, Navbar, Nav, NavDropdown, Form, FormControl} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap'
+import React from "react";
+import {
+  Button,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  FormControl,
+} from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import EditUser from "./EditUser";
+import { useHistory } from "react-router-dom";
+import { GoSearch } from "react-icons/go";
+const NavBar = ({
+  setGenre,
+  movieGenres,
+  showGenres,
+  signIn,
+  signUp,
+  user,
+  signOut,
+  handleEdit,
+  handleSearch,
+}) => {
+  let history = useHistory();
 
-const NavBar = ({setGenre, movieGenres, showGenres}) => {
   return (
-    <div className='navbar'>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">NETFLIX DECIDER</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-            <LinkContainer to='/'>
-                <Nav.Link>Home</Nav.Link>
+    <Navbar className="navbar" expand="lg" fixed="top">
+      <LinkContainer to="/">
+        <Navbar.Brand>NOTFLIX</Navbar.Brand>
+      </LinkContainer>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <LinkContainer to="/">
+            <Nav.Link>Home</Nav.Link>
+          </LinkContainer>
+          {user ? (
+            <LinkContainer to="/favorites">
+              <Nav.Link>{user.username}'s Favorites</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/favorites'>
-                <Nav.Link>Favorites</Nav.Link>
-            </LinkContainer>
-            <NavDropdown title="Movies" id="basic-nav-dropdown">
-                {movieGenres.map(genre => <LinkContainer to={`/movies/${genre.toLowerCase()}`}><NavDropdown.Item onClick={() => setGenre(genre)}>{genre}</NavDropdown.Item></LinkContainer>)}
-            </NavDropdown>
-            <NavDropdown title="TV" id="basic-nav-dropdown">
-              {showGenres.map(genre => <LinkContainer to={`/tv_shows/${genre.toLowerCase()}`}><NavDropdown.Item onClick={() => setGenre(genre)}>{genre}</NavDropdown.Item></LinkContainer>)}
-            </NavDropdown>
-            </Nav>
-            <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-success">Search</Button>
-            </Form>
-        </Navbar.Collapse>
-        </Navbar>
-    </div>
+          ) : null}
+          <NavDropdown title="Movies">
+            {movieGenres.map((genre) => (
+              <LinkContainer to={`/movies/${genre.toLowerCase()}`}>
+                <NavDropdown.Item onClick={() => setGenre(genre)}>
+                  {genre}
+                </NavDropdown.Item>
+              </LinkContainer>
+            ))}
+          </NavDropdown>
+          <NavDropdown title="TV">
+            {showGenres.map((genre) => (
+              <LinkContainer to={`/tv_shows/${genre.toLowerCase()}`}>
+                <NavDropdown.Item onClick={() => setGenre(genre)}>
+                  {genre}
+                </NavDropdown.Item>
+              </LinkContainer>
+            ))}
+          </NavDropdown>
+          {user ? (
+            <>
+              <LinkContainer to="/">
+                <Nav.Link title="Sign Out" onClick={signOut}>
+                  Sign Out
+                </Nav.Link>
+              </LinkContainer>
+              <NavDropdown title="Edit User">
+                <EditUser handleEdit={handleEdit} user={user} />
+              </NavDropdown>
+            </>
+          ) : (
+            <>
+              <NavDropdown title="Sign In">
+                <SignIn signIn={signIn} />
+              </NavDropdown>
+              <NavDropdown title="Sign Up">
+                <SignUp signUp={signUp} />
+              </NavDropdown>
+            </>
+          )}
+        </Nav>
+        <GoSearch style={{ marginRight: "10px" }} />
+        <Form
+          inline
+          onSubmit={(e) => (handleSearch(e), history.push("/search"))}
+        >
+          <FormControl
+            type="text"
+            placeholder="Search by title"
+            Search
+            by
+            title
+            className="nav-search mr-sm-2"
+            name="search"
+          />
+          {/* <Button type="submit" variant="dark">
+            Search
+          </Button> */}
+        </Form>
+      </Navbar.Collapse>
+    </Navbar>
   );
-}
+};
 
 export default NavBar;

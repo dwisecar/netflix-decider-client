@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 const signUp = ({ signUp }) => {
   return (
-    <Form onSubmit={signUp}>
+    <Form onSubmit={signUp} style={{ padding: "5px" }}>
       <h2>Sign Up</h2>
       <Form.Group controlId="formBasicUsername">
         <Form.Label>Username</Form.Label>
@@ -10,15 +10,21 @@ const signUp = ({ signUp }) => {
           name="username"
           type="username"
           placeholder="Enter username"
+          className="nav-search"
         />
       </Form.Group>
 
       <Form.Group controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" name="password" />
+        <Form.Control
+          type="password"
+          placeholder="Password"
+          name="password"
+          className="nav-search"
+        />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
+      <Button variant="danger" type="submit">
         Submit
       </Button>
     </Form>

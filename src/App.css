@@ -1,3 +1,9 @@
+body{
+  background: black;
+  color: white;
+  font-family: 'Bebas Neue';
+}
+
 .App {
   text-align: center;
 }
@@ -28,9 +34,167 @@
   color: #61dafb;
 }
 
-.big-card {
-  align-items: center;
-  justify-content: center;
+.all-content-container {
+  max-width: 90%;
+}
+
+.navbar {
+  background: linear-gradient(red, rgb(126, 1, 1));
+  font-size: 16pt;
+}
+
+.navbar-brand{
+  font-size: 20pt;
+}
+
+.nav-search {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.big-title {
+  margin-bottom: 0;
+}
+
+.row-title {
+  margin-bottom: 0;
+  font-size: 2rem;
+}
+
+.card{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,0);
+  
+  z-index:1;
+  padding:10%;
+}
+.netflix-card{
+  background: black;
+}
+
+.netflix-card > .card-image {
+  transform: scale(1);
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
+}
+
+.netflix-card:hover > .card-image {
+  transform: scale(1.17);
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
+}
+
+
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgb(0,0,0,0);
+  border-radius: calc(.25rem - 1px);
+}
+
+.netflix-card:hover > .card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgb(0,0,0,.75);
+  border-radius: calc(.25rem - 1px);
+}
+
+.card-img-overlay:hover * {
+  opacity: 1;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
+}
+
+.card-title{
+  opacity: 0;
+  color: white;
+  font-size: 20pt;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
+}
+
+.card-text {
+  padding:5%;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  line-height: 20px;
+  color: white;
+  opacity: 0;
+}
+
+.card-button{
+  margin-left: 37%;
+  opacity: 0;
+  font-size: 16pt;
+  background: red;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease; 
+  -moz-transition: all .5s ease; 
+  -o-transition: all .5s ease; 
+  -ms-transition: all .5s ease; 
+}
+
+.genre-display-row{
+  padding-top: 150px;
+}
+
+.genre-col{
+  padding-bottom: 10px;
+}
+
+.genre-card{
+  transform: scale(1.5);
+  font-size: 10pt;
+  z-index: 2;
+}
+
+.carousel-arrow--right {
+  right: calc(-0.25% + 1px);
+}
+
+.carousel-arrow--left {
+  left: calc(-.2% + 1px);
+}
+
+.carousel-arrow {
+  position: absolute;
+  outline: 0;
+  transition: all .5s;
+  border-radius: 5px;
+  border: 5px;
+  z-index: 1000;
+  background: rgba(160, 160, 160, 0.5);
+  min-width: 30px;
+  min-height: 250px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.carousel-arrow:hover {
+  background: rgba(204, 204, 204, 0.733);
 }
 
 @keyframes App-logo-spin {
@@ -41,4 +205,14 @@
     transform: rotate(360deg);
   }
 
+}
+
+@keyframes imageZoom {
+  from {transform: scale(1)}
+  to {transform: scale(1.17)}
+}
+
+@keyframes imageZoomOut {
+  from {transform: scale(1.17)}
+  to {transform: scale(1)}
 }

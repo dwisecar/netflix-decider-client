@@ -1,12 +1,11 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AllContent from "./containers/AllContent";
-import Recommendations from "./containers/Recommendations";
-import DisplayGenre from "./containers/DisplayGenre";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import CategoryDisplay from "./containers/CategoryDisplay";
+
 class App extends React.Component {
   state = {
     movies: [],
@@ -14,18 +13,87 @@ class App extends React.Component {
     recommendations: [],
     selectedGenre: "",
     user: false,
+    filteredNetflix: [],
+  };
+
+  handleSearch = (e) => {
+    e.preventDefault();
+
+    let searchTerm = e.target.search.value;
+    let totalSearched = [];
+    totalSearched.push(
+      ...this.state.shows.filter((show) => show.title.startsWith(searchTerm))
+    );
+    totalSearched.push(
+      ...this.state.movies.filter((movie) => movie.title.startsWith(searchTerm))
+    );
+    console.log(totalSearched);
+    this.setState({
+      filteredNetflix: totalSearched,
+    });
   };
 
   setGenre = (genre) => {
     this.setState({ selectedGenre: genre });
   };
 
-  componentDidMount() {}
-  // User Sign in Method
+  setRecommendations = () => {
+    let genreObj = {};
+    this.state.user.medias &&
+      this.state.user.medias.forEach((media) => {
+        genreObj[media.genre]
+          ? genreObj[media.genre]++
+          : (genreObj[media.genre] = 1);
+      });
+    for (let obj in genreObj) {
+      genreObj[obj] =
+        Math.ceil(genreObj[obj] * 10) / this.state.user.medias.length;
+    }
+    let finalArr = [];
+    for (let obj in genreObj) {
+      let tempMovieArr = [];
+      let i = 0;
+      while (
+        tempMovieArr.length < genreObj[obj] &&
+        i < this.state.movies.length
+      ) {
+        if (
+          this.state.movies[i].genre === obj &&
+          !this.state.user.medias
+            .map((show) => show.title)
+            .includes(this.state.movies[i].title)
+        ) {
+          tempMovieArr.push(this.state.movies[i]);
+        }
+        i++;
+      }
+      let tempShowArr = [];
+      let j = 0;
+      while (
+        tempShowArr.length < genreObj[obj] &&
+        j < this.state.shows.length
+      ) {
+        if (
+          this.state.shows[j].genre === obj &&
+          !this.state.user.medias
+            .map((show) => show.title)
+            .includes(this.state.shows[j].title)
+        ) {
+          tempShowArr.push(this.state.shows[j]);
+        }
+        j++;
+      }
+      finalArr.push(...tempShowArr, ...tempMovieArr);
+    }
+    this.setState({
+      recommendations: [...finalArr],
+    });
+  };
+
   userSignIn = (e) => {
     e.preventDefault();
     let form = e.target;
-    fetch("http://localhost:3000/signin", {
+    fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,9 +109,16 @@ class App extends React.Component {
           alert(user["error"]);
         } else {
           form.reset();
-          this.setState({
-            user: user,
-          });
+          this.setState(
+            {
+              user: user.user,
+            },
+            () => {
+              this.fetchContent();
+              this.setRecommendations();
+            }
+          );
+          localStorage.setItem("token", user.jwt);
         }
       });
   };
@@ -52,7 +127,7 @@ class App extends React.Component {
   userSignUp = (e) => {
     e.preventDefault();
     let form = e.target;
-    fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/api/v1/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,15 +139,28 @@ class App extends React.Component {
     })
       .then((resp) => resp.json())
       .then((user) => {
-        if (user["status"] === 400) {
+        if (user["status"] === 500) {
           alert(user["error"]);
         } else {
           form.reset();
-          this.setState({
-            user: user,
-          });
+          this.setState(
+            {
+              user: user.user,
+            },
+            () => {
+              this.fetchContent();
+              this.setRecommendations();
+            }
+          );
+          localStorage.setItem("token", user.jwt);
         }
       });
+  };
+
+  //handle a user signing out
+  handleLogout = () => {
+    localStorage.clear();
+    this.setState({ user: false });
   };
 
   fetchContent = () => {
@@ -85,8 +173,35 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchContent();
+    const token = localStorage.token;
+    if (token) {
+      this.persistUser(token);
+    } else {
+      this.fetchContent();
+    }
   }
+
+  //persisting a user when revisitng the web page
+  persistUser = (token) => {
+    fetch("http://localhost:3000/api/v1/persist", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((user) =>
+        this.setState(
+          {
+            user: user,
+          },
+          () => {
+            this.fetchContent();
+            setTimeout(this.setRecommendations, 1000);
+          }
+        )
+      );
+  };
 
   //selectedGenre set by the navbar links
   setGenre = (genre) => {
@@ -95,9 +210,98 @@ class App extends React.Component {
 
   //on like button click, this function receives the movie or show object and the bool value of liked or not
   setFavorite = (media, value) => {
-    console.log(media, value);
+    value ? this.postFavorite(media) : this.deleteFavorite(media);
   };
 
+  postFavorite = (media) => {
+    fetch("http://localhost:3000/likes", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accepts: "application/json",
+      },
+      body: JSON.stringify({
+        user_id: this.state.user.id,
+        media_id: media.id,
+        media_type: media.vtype,
+      }),
+    }).then(() => {
+      this.setState(
+        {
+          user: {
+            id: this.state.user.id,
+            username: this.state.user.username,
+            medias: [...this.state.user.medias, media],
+          },
+        },
+        () => {
+          this.setRecommendations();
+        }
+      );
+    });
+  };
+
+  deleteFavorite = (media) => {
+    let token = localStorage.token;
+    let updated = this.state.user.medias.filter((net) => {
+      return net.title !== media.title;
+    });
+    fetch("http://localhost:3000/delete_like", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accepts: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        user_id: this.state.user.id,
+        media_id: media.id,
+        media_type: media.vtype,
+      }),
+    }).then(() => {
+      this.setState({
+        user: {
+          medias: updated,
+          id: this.state.user.id,
+          username: this.state.user.username,
+        },
+      });
+    });
+  };
+
+  //handle editing username
+  handleEdit = (e) => {
+    e.preventDefault();
+    let form = e.target;
+    let token = localStorage.token;
+    let newUsername = e.target.username.value;
+    console.log(e.target.username.value);
+    fetch(`http://localhost:3000/api/v1/editname`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+        Accepts: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        username: newUsername,
+        user_id: this.state.user.id,
+      }),
+    }).then(
+      this.setState(
+        {
+          user: {
+            medias: this.state.user.medias,
+            id: this.state.user.id,
+            username: newUsername,
+          },
+        },
+        () => {
+          form.reset();
+        }
+      )
+    );
+  };
   //order in which each category renders on the main page
   movieGenres = () => {
     return [
@@ -111,7 +315,6 @@ class App extends React.Component {
       "Crime",
       "Mystery",
       "Romance",
-      "Superhero",
       "Musical",
       "Family",
       "Biography",
@@ -130,8 +333,6 @@ class App extends React.Component {
       "Documentary",
       "Romance",
       "Sci-Fi",
-      "Superhero",
-      "Musical",
       "Family",
       "Fantasy",
       "Biography",
@@ -141,8 +342,7 @@ class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.user);
-    let { movies, shows, recommendations, selectedGenre } = this.state;
+    let { movies, shows, recommendations, selectedGenre, user } = this.state;
     return (
       <Router>
         <div className="main">
@@ -150,8 +350,13 @@ class App extends React.Component {
             setGenre={this.setGenre}
             movieGenres={this.movieGenres()}
             showGenres={this.showGenres()}
+            signIn={this.userSignIn}
+            signUp={this.userSignUp}
+            user={user}
+            signOut={this.handleLogout}
+            handleEdit={this.handleEdit}
+            handleSearch={this.handleSearch}
           />
-          <Recommendations contents={recommendations} />
           <Route
             exact
             path="/"
@@ -162,35 +367,62 @@ class App extends React.Component {
                 movieGenres={this.movieGenres()}
                 showGenres={this.showGenres()}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
+                recommendations={recommendations}
+                user={user}
               />
             )}
           />
           <Route
             path={`/movies/${selectedGenre}`}
             render={() => (
-              <DisplayGenre
+              <CategoryDisplay
                 genre={selectedGenre}
-                contents={this.state.movies.filter(
+                contents={movies.filter(
                   (movie) => movie.genre === selectedGenre
                 )}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
               />
             )}
           />
           <Route
             path={`/tv_shows/${selectedGenre}`}
             render={() => (
-              <DisplayGenre
+              <CategoryDisplay
                 genre={selectedGenre}
-                contents={this.state.shows.filter(
+                contents={shows.filter(
                   (movie) => movie.genre === selectedGenre
                 )}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
               />
             )}
           />
-          <SignIn signIn={this.userSignIn} />
-          <SignUp signUp={this.userSignUp} />
+          <Route
+            path={"/favorites"}
+            render={() => (
+              <CategoryDisplay
+                contents={user.medias}
+                setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
+              />
+            )}
+          />
+          <Route
+            path={"/search"}
+            render={() => (
+              <CategoryDisplay
+                contents={this.state.filteredNetflix}
+                setFavorite={this.setFavorite}
+                favorites={user.medias}
+                user={user}
+              />
+            )}
+          />
         </div>
       </Router>
     );

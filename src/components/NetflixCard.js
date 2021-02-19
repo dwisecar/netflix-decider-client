@@ -1,47 +1,33 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 
-class NetflixCard extends React.Component{
-    state = {
-        hoverOver: false,
-        liked: false
-    }
-
-    handleLike = value => {
-        this.setState({liked:value})
-        this.props.setFavorite(this.props.details, value)
-    }
+const NetflixCard = ({setFavorite, details, user, isFavorite}) => {
     
-    hovering = bool => {
-        this.setState({
-            hoverOver: bool
-        })
+    const setLiked = val => {
+        setFavorite(details, val)
     }
 
-    render(){
-        let { details } = this.props
-        if(this.state.hoverOver){
-            return (
-            <div onMouseLeave={() => this.hovering(false)}>
-                <Card style={{ width: '18rem'  }} className='big-card'>
-                    <Card.Img variant="top" src={details.image} />
-                    <Card.Body>
-                        <Card.Title>{details.title}</Card.Title>
-                        <Card.Text>{details.synopsis}</Card.Text>
-                        {this.state.liked === true ? <Button onClick={() => this.handleLike(false)} variant="primary">Unlike</Button> : <Button onClick={() => this.handleLike(true)} variant="primary">Like</Button>}
-                    </Card.Body>
-                </Card>
-            </div>)
-        } else {
-            return(          
-                <div onMouseEnter={() => this.hovering(true)}>
-                    <Card >
-                        <img src={this.props.details.image}/>
-                    </Card>
-                </div>
-                
-            )
-        }
-    }
+    if(user !== false){
+        return (
+            <Card className='netflix-card'>
+                <Card.Img src={details.image} alt="card-image" className="card-image"/>
+                <Card.ImgOverlay >
+                    <Card.Title className='card-title'>{details.title}</Card.Title>
+                    <Card.Text className='card-text'>{details.synopsis}<br></br><br></br>-{details.year}-</Card.Text>
+                    {isFavorite === true ? 
+                        <Button className='card-button' onClick={() => setLiked(false)} variant="danger">Unlike</Button> : 
+                        <Button className='card-button' onClick={() => setLiked(true)} variant="danger">Like</Button>}
+                </Card.ImgOverlay>
+            </Card>)
+    } else {
+        return (
+            <Card className='netflix-card'>
+                <Card.Img src={details.image} alt="card-image" className="card-image"/>
+                <Card.ImgOverlay >
+                    <Card.Title className='card-title'>{details.title}</Card.Title>
+                    <Card.Text className='card-text'>{details.synopsis}<br></br><br></br>-{details.year}-</Card.Text>
+                </Card.ImgOverlay>
+            </Card>)
+    }        
 }
 export default NetflixCard
