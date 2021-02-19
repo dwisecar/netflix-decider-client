@@ -1,70 +1,18 @@
-# Getting Started with Create React App
+# Notflix-React-App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repo is the frontend for the Notflix react app. This appallows users to browse the newest shows and movies on Netflix, add them to a favorites list, and then receive recommendations for similar content based on those favorites.
 
-## Available Scripts
+Created by Taylor Bustamante (taylorbustamante16@gmail.com) and David Wisecarver (dwisecar@gmail.com)
 
-In the project directory, you can run:
+## Installation
 
-### `yarn start`
+- Fork and clone this repository. 
+- Fork and clone the backend repository at https://github.com/tbustama/movie-decider-backend
+- Follow the instructions there to set up the database and start the backend server.
+- Once the backend server is running, enter `npm install` into the terminal.
+- Once the dependencies are installed, enter `npm start` into the terminal to start the front-end server.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Using the app
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Create an account by clicking on 'Sign Up' on the navbar. Once you are logged in you will be able to browse through TV shows and movies seperated by genres. Hover over a card to see the title, a synopsis, and the like button. Clicking the 'like' button will add that show or movie into your favorites list. Once you have a favorite, a list of recommendations will generate at the top of the screen. The recommendations displays the highest rated movies or shows at a ratio that matches the ratio of genres in your favorites list. The navbar has links to your favorites, links to browse by individual genres of either TV shows or movies, and a drop down form to edit your username.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

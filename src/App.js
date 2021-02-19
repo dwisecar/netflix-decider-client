@@ -265,7 +265,11 @@ class App extends React.Component {
           id: this.state.user.id,
           username: this.state.user.username,
         },
-      });
+      }, 
+        () => {
+          this.setRecommendations();
+        }
+      );
     });
   };
 
