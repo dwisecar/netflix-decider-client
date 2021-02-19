@@ -12,7 +12,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import EditUser from "./EditUser";
 import { useHistory } from "react-router-dom";
-
+import { GoSearch } from "react-icons/go";
 const NavBar = ({
   setGenre,
   movieGenres,
@@ -25,11 +25,12 @@ const NavBar = ({
   handleSearch,
 }) => {
   let history = useHistory();
+
   return (
-    <Navbar className="navbar" expand="lg" fixed="top" >
-      <LinkContainer to="/"> 
+    <Navbar className="navbar" expand="lg" fixed="top">
+      <LinkContainer to="/">
         <Navbar.Brand>NOTFLIX</Navbar.Brand>
-      </LinkContainer> 
+      </LinkContainer>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -81,19 +82,23 @@ const NavBar = ({
             </>
           )}
         </Nav>
+        <GoSearch style={{ marginRight: "10px" }} />
         <Form
           inline
           onSubmit={(e) => (handleSearch(e), history.push("/search"))}
         >
           <FormControl
             type="text"
-            placeholder="Search"
+            placeholder="Search by title"
+            Search
+            by
+            title
             className="nav-search mr-sm-2"
             name="search"
           />
-          <Button type="submit" variant="dark">
+          {/* <Button type="submit" variant="dark">
             Search
-          </Button>
+          </Button> */}
         </Form>
       </Navbar.Collapse>
     </Navbar>
