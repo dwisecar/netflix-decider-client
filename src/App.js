@@ -373,6 +373,7 @@ class App extends React.Component {
               />
             )}
           />
+          <Route exact path="/signout" />
           <Route
             path={`/movies/${selectedGenre}`}
             render={() => (

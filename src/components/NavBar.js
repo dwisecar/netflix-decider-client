@@ -34,7 +34,7 @@ const NavBar = ({
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <LinkContainer to="/">
+          <LinkContainer exact to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
           {user ? (
@@ -62,8 +62,14 @@ const NavBar = ({
           </NavDropdown>
           {user ? (
             <>
-              <LinkContainer to="/">
-                <Nav.Link title="Sign Out" onClick={signOut}>
+              <LinkContainer exact to="/signout">
+                <Nav.Link
+                  title="Sign Out"
+                  onClick={(e) => (
+                    signOut(e), setTimeout(() => history.push("/"), 30)
+                  )}
+                  style={{ color: "rgba(0,0,0,.5)" }}
+                >
                   Sign Out
                 </Nav.Link>
               </LinkContainer>
@@ -84,7 +90,7 @@ const NavBar = ({
         </Nav>
         <GoSearch style={{ marginRight: "10px" }} />
         <Form
-          inline 
+          inline
           onSubmit={(e) => (handleSearch(e), history.push("/search"))}
         >
           <FormControl
