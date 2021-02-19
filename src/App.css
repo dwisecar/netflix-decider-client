@@ -30,10 +30,6 @@ body{
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
 .all-content-container {
   max-width: 90%;
 }
@@ -146,15 +142,18 @@ body{
 }
 
 .card-button{
-  margin-left: 37%;
   opacity: 0;
-  font-size: 16pt;
-  background: red;
+  font-size: 18pt;
+  background: linear-gradient(red, rgb(126, 1, 1));
   transition: all .5s ease;
   -webkit-transition: all .5s ease; 
   -moz-transition: all .5s ease; 
   -o-transition: all .5s ease; 
   -ms-transition: all .5s ease; 
+}
+
+.card-button:hover{
+  background: linear-gradient(rgb(185, 1, 1), rgb(109, 1, 1));
 }
 
 .genre-display-row{

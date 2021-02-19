@@ -244,7 +244,7 @@ class App extends React.Component {
   deleteFavorite = (media) => {
     let token = localStorage.token;
     let updated = this.state.user.medias.filter((net) => {
-      return net !== media;
+      return net.title !== media.title;
     });
     fetch("http://localhost:3000/delete_like", {
       method: "POST",
@@ -263,7 +263,7 @@ class App extends React.Component {
         user: {
           medias: updated,
           id: this.state.user.id,
-          username: this.state.user.id,
+          username: this.state.user.username,
         },
       });
     });
@@ -418,6 +418,7 @@ class App extends React.Component {
               <CategoryDisplay
                 contents={this.state.filteredNetflix}
                 setFavorite={this.setFavorite}
+                favorites={user.medias}
                 user={user}
               />
             )}

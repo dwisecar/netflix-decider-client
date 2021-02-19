@@ -15,8 +15,8 @@ const NetflixCard = ({setFavorite, details, user, isFavorite}) => {
                     <Card.Title className='card-title'>{details.title}</Card.Title>
                     <Card.Text className='card-text'>{details.synopsis}<br></br><br></br>-{details.year}-</Card.Text>
                     {isFavorite === true ? 
-                        <Button className='card-button' onClick={() => setLiked(false)} variant="danger">Unlike</Button> : 
-                        <Button className='card-button' onClick={() => setLiked(true)} variant="danger">Like</Button>}
+                        <Button className='card-button' onClick={() => setLiked(false)} variant="danger" block>Unlike</Button> : 
+                        <Button className='card-button' onClick={() => setLiked(true)} variant="danger" block>Like</Button>}
                 </Card.ImgOverlay>
             </Card>)
     } else {
