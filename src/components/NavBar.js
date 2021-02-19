@@ -62,7 +62,7 @@ const NavBar = ({
           </NavDropdown>
           {user ? (
             <>
-              <LinkContainer exact to="/">
+              <LinkContainer exact to="/home">
                 <Nav.Link
                   title="Sign Out"
                   onClick={signOut}
